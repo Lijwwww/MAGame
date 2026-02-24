@@ -1,0 +1,4 @@
+default:
+SR:0.9444444444444444 avg_step:13.0 avg_time:3.138367838329739 avg_distance:[8.48493928 8.974451  ] avg_gap:[5.6055102  5.62399753] avg_collision:0.0 avg_evasion:0.0 avg_reward:14.234756469726562
+default:
+SR:0.9444444444444444 avg_step:13.0 avg_time:3.030962692366706 avg_distance:[8.48493928 8.974451  ] avg_gap:[5.6055102  5.62399753] avg_collision:0.0 avg_evasion:0.0 avg_reward:14.234756469726562

@@ -1,0 +1,6 @@
+default:
+SR:0.9 avg_step:17.1 avg_time:3.9569863438606263 avg_distance:[10.63369374 11.74476136] avg_gap:[4.95143774 5.54158266] avg_collision:0.05 avg_evasion:0.0 avg_reward:14.964548110961914
+default:
+SR:0.9 avg_step:17.1 avg_time:3.2269193053245546 avg_distance:[10.63369374 11.74476136] avg_gap:[4.95143774 5.54158266] avg_collision:0.05 avg_evasion:0.0 avg_reward:14.964548110961914
+default:
+SR:0.9 avg_step:17.1 avg_time:3.7343762636184694 avg_distance:[10.63369374 11.74476136] avg_gap:[4.95143774 5.54158266] avg_collision:0.05 avg_evasion:0.0 avg_reward:14.964548110961914

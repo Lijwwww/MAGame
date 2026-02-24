@@ -1,0 +1,22 @@
+# 1. 屏蔽所有 raw_records 文件夹下的 npy 文件
+**/raw_records/*.npy
+
+# 2. 屏蔽 utils/pathplan
+utils/pathplan/
+!utils/pathplan/map_difficult.png
+!utils/pathplan/map_simple.png
+
+# 3. 忽略 Python 缓存
+__pycache__/
+*.pyc
+.idea/
+
+
+old/
+checkpoints/
+runs/
+assets/Fonts/
+results/robustness_score/capture_before/
+results/robustness_score/search_noSAC/
+terrain2.usd
+assets/robot_mecanum_nowheel.usd

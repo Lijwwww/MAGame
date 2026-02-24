@@ -1,0 +1,80 @@
+params:
+  seed: ${...seed}
+
+  algo:
+    name: a2c_continuous
+
+  model:
+    name: continuous_a2c_logstd
+
+  network:
+    name: actor_critic
+    separate: False
+    space:
+      continuous:
+        mu_activation: None
+        sigma_activation: None
+
+        mu_init:
+          name: default
+        sigma_init:
+          name: const_initializer
+          val: 0
+        fixed_sigma: True
+
+    # MLP Block. Convolution is supported too.
+    mlp:
+      units: [128, 64, 32] # [256, 256, 128]
+      activation: elu # Activations between dense layers.
+      d2rl: False # Use d2rl architecture from https://arxiv.org/abs/2010.09163.
+      
+      initializer:
+        name: default
+      regularizer:
+        name: None
+
+  load_checkpoint: ${if:${...checkpoint},True,False} # flag which sets whether to load the checkpoint
+  load_path: ${...checkpoint} # path to the checkpoint to load
+
+  config:
+    name: ${resolve_default:RoboGame,${....experiment}}
+    full_experiment_name: ${.name}
+    device: ${....rl_device}
+    device_name: ${....rl_device}
+    env_name: rlgpu
+    ppo: True
+    mixed_precision: False
+    normalize_input: True
+    normalize_value: True
+    num_actors: ${....task.env.numEnvs}
+
+    # Reward Shaper. Can apply simple transformations.
+    reward_shaper:
+      scale_value: 0.1
+    normalize_advantage: True
+    gamma: 0.99 # Reward Discount
+    tau: 0.95 # Lambda for GAE. Called tau by mistake long time ago because lambda is keyword in python :(
+    learning_rate: 1e-4 # 1e-4
+    lr_schedule: adaptive
+    kl_threshold: 0.016 # KL threshould for adaptive schedule. if KL < kl_threshold/2 lr = lr * 1.5 and opposite.
+    score_to_win: 20000 # If score is >=value then this value training will stop.
+    max_epochs: ${resolve_default:50000,${....max_iterations}} # Maximum number of epochs to run.
+    save_best_after: 50 # How many epochs to wait before start saving checkpoint with best score.
+    save_frequency: 50
+    grad_norm: 1.0 # Grad norm. Applied if truncate_grads is True. Good value is in (1.0, 10.0)
+    entropy_coef: 0.0 # Entropy coefficient. Good value for continuous space is 0. For discrete is 0.02
+    truncate_grads: True # Apply truncate grads or not. It stabilizes training.
+    e_clip: 0.2 # clip parameter for ppo loss.
+
+    # 决定一个epoch含有多少个step
+    # 下面这两个至少设置为2，设置为1, rl-games会报错
+    horizon_length: 16 # Horizon length per each actor. Total number of steps will be num_actors*horizon_length * num_agents (if env is not MA num_agents==1).
+
+    minibatch_size: 16 # Minibatch size. Total number number of steps must be divisible by minibatch size.
+
+    # 似乎是一次epoch进行policy inference的次数
+    mini_epochs: 8 # Number of miniepochs. Good value is in [1,10]
+    critic_coef: 2 # Critic coef. by default critic_loss = critic_coef * 1/2 * MSE.
+    clip_value: True # Apply clip to the value loss. If you are using normalize_value you don't need it.
+    seq_len: 4
+    bounds_loss_coef: 0.0001 # Coefficient to the auxiary loss for continuous space.
