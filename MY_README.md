@@ -1,15 +1,3 @@
-工作站
-用户名：dell
-密码：tsinghua
-
-向日葵
-识别码：556 656 698
-长期验证码：h38qto
-
-toDesk
-设备代码：669 971 533
-密码：641pqi7g
-
 文件结构
 ├── assets
 │   ├── 场地与机器人模型
@@ -89,31 +77,15 @@ sudo reboot
 
 sudo systemctl restart runsunloginclient
 
-
-
 ---
-
-启动train前需要修改的路径：
-
-1. train文件中诸如PPO.main的main函数的checkpoints存储位置
-2. evaluation_for_training输入名字
-3. 要load进来的model的名字
-4. evaluation最后
-
-
 
 选择的文件版本：
 robogame_task.py、vec_env_rlgames2.py（新版gymnasium）、rl_task.py
 
 
-
-各算法选择的checkpoints：
-
-td3v8、SACv2、PPOv2、NPGv2，其他没有多版本
-
 选择的地图：
 
-map_simple（注：论文的高台和斜坡封闭，也即不可上去）
+map3_modified（注：论文的高台和斜坡封闭，也即不可上去）
 
 ---
 

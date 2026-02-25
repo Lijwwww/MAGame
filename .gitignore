@@ -2,7 +2,7 @@
 **/raw_records/*.npy
 
 # 2. 屏蔽 utils/pathplan
-utils/pathplan/
+utils/pathplan/*
 !utils/pathplan/map_difficult.png
 !utils/pathplan/map_simple.png
 
@@ -12,7 +12,7 @@ __pycache__/
 .idea/
 
 
-old/
+/old/
 checkpoints/
 runs/
 assets/Fonts/
@@ -20,3 +20,7 @@ results/robustness_score/capture_before/
 results/robustness_score/search_noSAC/
 terrain2.usd
 assets/robot_mecanum_nowheel.usd
+.tokens.env
+scripts/backup/hf_windows.py
+scripts/backup/hf_docker.py
+REMOTE_CONFIG.txt
