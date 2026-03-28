@@ -13,4 +13,4 @@ HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=$HF_TOKEN hf upload jvvww/MAGame ./ch
 
 echo "All backups completed!"
 
-# HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=$HF_TOKEN hf upload jvvww/MAGame ~/下载/pursuit-sim.tar / --repo-type=dataset
+# HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=$HF_TOKEN hf upload jvvww/MAGame ~/下载/pursuit-sim.tar pursuit-sim.tar --repo-type=dataset
