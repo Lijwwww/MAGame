@@ -9,8 +9,8 @@ HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=$HF_TOKEN hf upload jvvww/MAGame ./re
 
 # 3. 上传权重到 HF Model
 echo "Uploading checkpoints to HF..."
-HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=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 hf upload jvvww/MAGame ./checkpoints /checkpoints --repo-type=dataset
+HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=$HF_TOKEN hf upload jvvww/MAGame ./checkpoints /checkpoints --repo-type=dataset
 
 echo "All backups completed!"
 
-# HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=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 hf upload jvvww/MAGame ~/下载/pursuit-sim.tar / --repo-type=dataset
+# HF_ENDPOINT=https://hf-mirror.com HF_TOKEN=$HF_TOKEN hf upload jvvww/MAGame ~/下载/pursuit-sim.tar / --repo-type=dataset
