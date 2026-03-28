@@ -1,5 +1,7 @@
-# 计算一个环境类型下算法鲁棒性值、权重、消融实验值等，并画出算法鲁棒性值随训练步数的曲线图
-# 已集成合并原始数据和计算博弈权重两个脚本的逻辑
+# 计算所有步数下算法鲁棒性值、权重、消融实验值等，并画出算法鲁棒性值随训练步数的曲线图
+# 目前方案是读取最后一个训练节点的博弈权重，因此权重计算相关的代码全都用不到，但这里仍做保留
+# 已集成合并原始数据（每步数据合并成一个文件）和计算博弈权重两个脚本的逻辑
+# 若已有合并后文件，则可直接通过RESULT_PATH读数据画图
 
 import json
 import os
@@ -8,11 +10,47 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.stats import kendalltau
+from matplotlib.ticker import FuncFormatter
+import matplotlib.font_manager as fm
 
 from merge.merge_json_multickps import merge_json_multickps
 
+# ================= Linux 字体配置 =================
+# 1. 将字体文件注册到 Matplotlib 的字体管理器中
+# 建议使用变量统一路径，避免大小写或路径不一致
+font_abs_path = '/workspace/omniisaacgymenvs/PursuitSim3D/assets/Fonts/SIMSUN.TTC'
+times_abs_path = '/workspace/omniisaacgymenvs/PursuitSim3D/assets/Fonts/TIMES.TTF'
+
+# 注册字体
+fm.fontManager.addfont(font_abs_path)
+fm.fontManager.addfont(times_abs_path)
+
+# 2. 获取准确的内部名称 (务必也用绝对路径获取)
+name_simsun = fm.FontProperties(fname=font_abs_path).get_name()
+name_times = fm.FontProperties(fname=times_abs_path).get_name()
+
+# 打印一下，确保获取到了正确名称（通常是 'SimSun'）
+# print(f"检测到字体名: {name_simsun}, {name_times}")
+
+# 3. 强制全局设置
+# 直接把 font.family 设为具体的字体名列表，不要只依赖 'serif' 别名
+plt.rcParams['font.family'] = [name_times, name_simsun]
+plt.rcParams['axes.unicode_minus'] = False
+
+# ================= Windows 字体配置 =================
+# # 1. 字体设置
+# # 逻辑：优先使用 'Times New Roman'，遇到它无法显示的字符（如汉字），
+# # 就会自动去用列表里的第二个字体 'SimSun' (宋体)
+# plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+
+# # 2. 解决负号显示为方块的问题
+# plt.rcParams['axes.unicode_minus'] = False
+
+# # 3. (可选) 设置数学公式字体，使其与 Times 风格一致
+# plt.rcParams['mathtext.fontset'] = 'stix'
+
 # ================= 配置区域 =================
-# 选择了读取最后一个训练节点的博弈权重，因此下面的参数大部分没用了
+# 选择了读取最后一个训练节点的博弈权重，因此不做权重计算，下面的参数除了main函数涉及到的，都没用了
 LAMBDA = 0.5  # 权重融合系数
 
 METRIC_SIGNS = {
@@ -226,41 +264,6 @@ def plot_robustness_curves(final_results, output_dir):
     """
     绘制各算法随训练步数的鲁棒性变化曲线
     """
-    # ================= Linux 字体配置 =================
-    import matplotlib.font_manager as fm
-    # 1. 将字体文件注册到 Matplotlib 的字体管理器中
-    # 建议使用变量统一路径，避免大小写或路径不一致
-    font_abs_path = '/workspace/omniisaacgymenvs/PursuitSim3D/assets/Fonts/SIMSUN.TTC'
-    times_abs_path = '/workspace/omniisaacgymenvs/PursuitSim3D/assets/Fonts/TIMES.TTF'
-
-    # 1. 注册字体
-    fm.fontManager.addfont(font_abs_path)
-    fm.fontManager.addfont(times_abs_path)
-    
-    # 2. 获取准确的内部名称 (务必也用绝对路径获取)
-    name_simsun = fm.FontProperties(fname=font_abs_path).get_name()
-    name_times = fm.FontProperties(fname=times_abs_path).get_name()
-    
-    # 打印一下，确保获取到了正确名称（通常是 'SimSun'）
-    # print(f"检测到字体名: {name_simsun}, {name_times}")
-
-    # 3. 强制全局设置
-    # 直接把 font.family 设为具体的字体名列表，不要只依赖 'serif' 别名
-    plt.rcParams['font.family'] = [name_times, name_simsun]
-    plt.rcParams['axes.unicode_minus'] = False
-
-    # ================= Windows 字体配置 =================
-    # # 1. 字体设置
-    # # 逻辑：优先使用 'Times New Roman'，遇到它无法显示的字符（如汉字），
-    # # 就会自动去用列表里的第二个字体 'SimSun' (宋体)
-    # plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
-
-    # # 2. 解决负号显示为方块的问题
-    # plt.rcParams['axes.unicode_minus'] = False
-
-    # # 3. (可选) 设置数学公式字体，使其与 Times 风格一致
-    # plt.rcParams['mathtext.fontset'] = 'stix'
-    
 
     plt.figure(figsize=(12, 8))
 
@@ -278,14 +281,13 @@ def plot_robustness_curves(final_results, output_dir):
         plt.plot(steps, scores, marker=current_marker, linestyle='-', label=algo, linewidth=2)
 
     # plt.title('Robustness Score Evolution over Training Steps', fontsize=14)
-    plt.xlabel('训练步数（千步）', fontsize=24)
+    plt.xlabel('训练步数/千步', fontsize=24)
     plt.ylabel('鲁棒性评分', fontsize=24)
     plt.legend(fontsize=22)
-    from matplotlib.ticker import FuncFormatter
     # 在 plt.xticks() 前添加以下代码
     def format_thousands(x, pos):
         """将步数转换为千单位"""
-        return f'{int(x/1000)}千'
+        return f'{int(x/1000)}'
     plt.gca().xaxis.set_major_formatter(FuncFormatter(format_thousands))
     plt.xticks(fontsize=18) # 设置 X 轴刻度字体大小
     plt.yticks(fontsize=18) # 设置 Y 轴刻度字体大小

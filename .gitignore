@@ -11,12 +11,19 @@ __pycache__/
 *.pyc
 .idea/
 
+# 4. 忽略字体文件
+assets/Fonts/
+!assets/Fonts/SIMSUN.TTC
+!assets/Fonts/TIMES.TTF
 
-old/
+/old/
 checkpoints/
 runs/
-assets/Fonts/
 results/robustness_score/capture_before/
 results/robustness_score/search_noSAC/
 terrain2.usd
 assets/robot_mecanum_nowheel.usd
+.tokens.env
+scripts/backup/hf_windows.py
+scripts/backup/hf_docker.py
+REMOTE_CONFIG.txt

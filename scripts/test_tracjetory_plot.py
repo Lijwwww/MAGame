@@ -1,15 +1,12 @@
 import scipy.ndimage  # 需要引入 scipy 进行图像形态学操作
-import json
-from matplotlib.colors import ListedColormap
 import numpy as np
-from stable_baselines3.common.evaluation import evaluate_policy
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import matplotlib.image as mpimg
 import os
 from matplotlib.lines import Line2D
-
 import matplotlib.font_manager as fm
+
+# ================= Linux 字体配置 =================
 # 1. 将字体文件注册到 Matplotlib 的字体管理器中
 # 建议使用变量统一路径，避免大小写或路径不一致
 font_abs_path = '/workspace/omniisaacgymenvs/PursuitSim3D/assets/Fonts/SIMSUN.TTC'
@@ -30,6 +27,18 @@ name_times = fm.FontProperties(fname=times_abs_path).get_name()
 # 直接把 font.family 设为具体的字体名列表，不要只依赖 'serif' 别名
 plt.rcParams['font.family'] = [name_times, name_simsun]
 plt.rcParams['axes.unicode_minus'] = False
+
+# ================= Windows 字体配置 =================
+# # 1. 字体设置
+# # 逻辑：优先使用 'Times New Roman'，遇到它无法显示的字符（如汉字），
+# # 就会自动去用列表里的第二个字体 'SimSun' (宋体)
+# plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+
+# # 2. 解决负号显示为方块的问题
+# plt.rcParams['axes.unicode_minus'] = False
+
+# # 3. (可选) 设置数学公式字体，使其与 Times 风格一致
+# plt.rcParams['mathtext.fontset'] = 'stix'
 
 
 def plot_trajectory_2d(trajectory_data, map_bounds, map_image_path, save_path, title):
