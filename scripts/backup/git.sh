@@ -7,7 +7,7 @@ echo "Pushing code to GitHub..."
 # git branch -M main
 # git remote add origin https://github.com/Lijwwww/MAGame.git
 
-# github官网->Settings->Developer settings获取
+# github官网->Settings->Developer settings获取，放入上述路径的GITHUB_TOKEN变量中
 git remote set-url origin https://${GITHUB_TOKEN}@github.com/Lijwwww/MAGame.git
 
 git add .

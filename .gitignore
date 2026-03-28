@@ -12,7 +12,7 @@ __pycache__/
 .idea/
 
 # 4. 忽略字体文件
-assets/Fonts/
+assets/Fonts/*
 !assets/Fonts/SIMSUN.TTC
 !assets/Fonts/TIMES.TTF
 
