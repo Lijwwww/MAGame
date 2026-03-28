@@ -2,7 +2,7 @@
 **/raw_records/*.npy
 
 # 2. 屏蔽 utils/pathplan
-utils/pathplan/
+utils/pathplan/*
 !utils/pathplan/map_difficult.png
 !utils/pathplan/map_simple.png
 

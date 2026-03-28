@@ -1,0 +1,16 @@
+$env:HTTPS_PROXY="http://127.0.0.1:7890"
+git clone https://<token>@github.com/Lijwwww/MAGame.git（私有）
+git clone https://github.com/Lijwwww/MAGame.git（公有）
+或直接 git clone https://gh-proxy.com/https://github.com/Lijwwww/MAGame.git代替前两步
+git pull origin main
+
+
+若是下载压缩包的：
+git init
+git remote add origin https://github.com/Lijwwww/MAGame.git 或 https://<token>@github.com/Lijwwww/MAGame.git
+# 1. 抓取远程所有分支信息
+git fetch origin
+# 2. 尝试强制合并远程 main 分支
+git merge origin/main --allow-unrelated-histories
+git reset --hard origin/main
+git pull origin main
