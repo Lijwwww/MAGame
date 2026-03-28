@@ -23,6 +23,7 @@ git pull origin main
 
 ### 上传
 git add .
-git commit -m "Backup at $(date +'%Y-%m-%d %H:%M:%S')"
+git commit -m "Backup at $(date +'%Y-%m-%d %H:%M:%S')"（linux）
+git commit -m "Backup at $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"  （windows）
 git pull origin main
 git push origin main
